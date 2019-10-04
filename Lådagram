@@ -1,0 +1,21 @@
+require(ggplot2) # Kör paketet ggplot2
+require(RColorBrewer) # Kör paketet RColorBrewer
+setwd("C:/Users/Acer/Downloads/Labb/DataLab1") # Sätter varifrån programmet hittar excel-filen
+Lon <- read.csv("VIS1 lon.csv", sep = ";") # Läser in excel-filen
+Lada <- ggplot(Lon) + # Definierar Lada-datan
+aes(x = factor(0), # Gör så att vi INTE specificerar x-axeln med namn
+    y = Lon) + # Tillsätter Lön från excel-filen till Y-axeln
+geom_boxplot(fill = "#F16913") + # Tillsätter färgen orange i vårt lådagram och skapar ett lådagram
+  scale_x_discrete(breaks = NULL) # Tar bort vertikal stödlinje 
+Lada <- Lada + # Sätter in nedan kod i datan
+theme_bw() + # Gör så temat blir svart och vitt
+theme(plot.caption = element_text(hjust = 0.0), # Flyttar källtexten till vänster i x-led
+      axis.title.y = element_text(angle = 0, # Gör så texten Lön i Y-led är horisontellt
+                                  vjust = 0.5), # Centrerar texten Lön i Y-led
+                                  plot.title = element_text(hjust = 0.5), # Centrerar titeln Fördelning av Lön
+                                  panel.grid.major.y = element_line(color = "black")) + # Sätter svart färg på stödlinjerna
+labs(y = "Lön", # Sätter ordet Lön till Y-axeln
+       x = NULL, # Gör så att inget ord visas vid X-axeln
+       title = "Fördelning av Lön" , # Skapar titel med angivet namn
+       caption = "Källa: NotReal AB") # Skapar källtext
+Lada # Kör koden
