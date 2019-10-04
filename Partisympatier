@@ -1,0 +1,29 @@
+require(ggplot2) # Kör paketet ggplot2
+require(RColorBrewer) # Kör paketet RColorBrewer
+#install.packages("readxl") <- Kör detta om du inte har installerat
+require(readxl) # Kör paketet readxl
+setwd(dir="C:/Users/Acer/Downloads") # Sätter varifrån programmet hittar excel-filen
+Parti <- read_excel("VIS1 Partisympatier.xlsx", sheet = "Kön") # Läser in sheet = Kön från excel-filen
+Barchart <- ggplot(data = Parti) + # Definierar Barchart-datan
+  aes(x = Kön,            # Tillsätter Kön från Excel till X-axeln
+      y = Procent,        # Tillsätter Procent från Excel till y-axeln
+      fill=Parti) +       # Skapar lista över Partiers färgdelning till höger
+  geom_bar(stat = "identity", # Krävs för att programmet ska räkna ut staplarnas höjd i Y-led.
+           position="dodge", # Gör så att staplarna ligger bredvid varandra
+           color = "black") + # Gör så att det är svart markering runt varje graf för extra tydlighet
+  theme_bw() + # Gör så temat blir svart och vitt
+  ggtitle("Partisympatier") + # Huvudrubrik som syns längst upp
+  theme(plot.title = element_text(hjust = 0.5), # Position för rubrik, i detta fall centralt. Väljs mellan 0 till 1
+        plot.caption = element_text(hjust = 0.0), # Position för källa, i detta fall sätts den längst till vänster
+        panel.grid.major.x = element_blank(), # Tar bort stödlinjer på X-axeln
+        axis.title.y = element_text(angle = 0.0, vjust = 0.5, size = 11)) + # Gör så Procent blir horisontellt på Y-axeln samt storlek på text
+  labs(x="Partifördelning mellan kön", # Skapar rubrik under X-axeln
+       caption="Källa: Statistiska centralbyrån (SCB) i maj 2018.") + # Tillsätter källans text
+  scale_fill_manual(name = "Parti", # Färgalternativ för alla 9 partier ges av name = "Oranges"
+                    values = brewer.pal(n=9,
+                                        name = "Oranges")) +
+  scale_y_continuous(breaks = seq(from = 0, to = 30 , by = 5), # Visar skalvärde var 5:e procent mellan 0 till 30
+                     limits = c(0, 35), # Sätter höjden på Y-axeln till 35
+                     expand = c(0,0)) # Gör så att Y-axeln möter X-axeln vid y = 0
+
+Barchart # GÖr så koden körs
