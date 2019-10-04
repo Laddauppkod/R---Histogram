@@ -1,0 +1,36 @@
+require(ggplot2) # Kör paketet
+require(RColorBrewer) # Kör paketet
+setwd("C:/Users/Acer/Downloads/Labb/DataLab1") # Sätter varifrån programmet hittar filen
+Lon <- read.csv("VIS1 Lon.csv", sep = ";") # Läser in excel-filen
+Hist <- ggplot(Lon) + aes(Lon) # Definierar Hist-datan
+Hist <- Hist + geom_histogram(fill = "#F16913", # Ändrar färg inuti diagrammet till orange
+                              color = "black", # Svart färg runt staplarna
+                              bins = 33) # Läser in 33 objekt från Excel
+Hist <- Hist + theme_bw() + # Sätter in kod i Hist samt svartvitt tema
+theme(plot.caption = element_text(hjust = 0.0), # Flyttar källtexten till vänster
+      axis.title.y = element_text(angle = 0, # Gör så texten antal blir horisontell
+                                  vjust = 0.5), # Centrerar text Antal i y-led
+                                  plot.title = 
+                                    element_text(hjust = 0.5), # Centrerar rubriktexten
+                                  panel.grid.major.x = # Tar bort vertikala stödlinjer
+                                    element_blank(),
+                                 panel.grid.minor.x = # Tar bort vertikala stödlinjer
+                                    element_blank(),
+                                  panel.grid.major.y = # Sätter färg för horistontell stödlinje
+                                    element_line(color = "dark gray")) +
+  
+  
+  labs(y = "Antal", # Skapar text i y-led
+       x = "Lön", # Skapar text i x-led
+       title = "Lön per anställda" , # Skapar rubriktext
+       caption = "Källa: NotReal AB")  # Skapar källtext
+         
+Hist <- Hist +  scale_x_continuous(breaks = seq(from = 0, to = 60000, by = 5000)) # Ändrar skalan på X-axeln för att få en synligare fördelning
+   
+        Hist <- Hist + scale_y_continuous(breaks = seq(from = 0, to = 10, by = 1), # Skapar skalvärde från 1-10 i y-led, steg mellan varje är 1
+                                          limits = c(0, 10), # Sätter höjd i y-axeln till 10
+                                          expand = c(0,0)) # Gör så att Y möter X vid y = 0
+
+
+
+Hist # Kör koden
